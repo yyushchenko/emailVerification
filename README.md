@@ -7,6 +7,8 @@ The goal is to create a test case that is checking:
 - sending email with subject and body to the same email address
 - that email with the given subject and from same sender is received
 
+After the test run a test report with logs is generated in a separate file. 
+
 #### Frameworks and tools used: 
 - Selenium
 - TestNG
@@ -39,7 +41,7 @@ This file allows to set up test parameters:
 
 For reporting, it is possible to use a TestNG report which can be configured in IDE and is automatically generated after
 a
-test run.
+test run in a test-output folder.
 Inbuilt TestNG Reporter class can be used to record logs in TestNG report:
 
 ```java
