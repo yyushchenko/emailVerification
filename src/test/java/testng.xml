@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Gmail Suite">
+    <test name="EmailTest">
+
+        <parameter name="email" value="email"/>
+        <parameter name="password" value="password"/>
+        <parameter name="baseUrl" value="https://www.google.com/gmail/about/"/>
+        <parameter name="reportFile" value="/path/to/report.txt"/>
+
+        <classes>
+            <class name="caseStudy.EmailTest"/>
+        </classes>
+
+    </test>
+</suite> <!-- Suite -->
