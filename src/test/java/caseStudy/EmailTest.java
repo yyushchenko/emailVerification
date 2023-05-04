@@ -27,16 +27,17 @@ public class EmailTest {
         System.out.println("Starting a new Email test");
         GeneralFunctions general = new GeneralFunctions();
         String subject = general.getCurrentDateTime();
+        String body = general.generateRandomString();
 
         driver.get(baseUrl);
         GmailPage gmailPage = new GmailPage(driver);
         gmailPage.loginToEmailBox(email, password);
         gmailPage.verifyLogin();
-        gmailPage.createEmail(email, subject);
+        gmailPage.createEmail(email, subject, body);
 
         general.driverWait(2000);
 
-        Assert.assertTrue(gmailPage.verifyEmailReceived(email, subject));
+        Assert.assertTrue(gmailPage.verifyEmailReceived(email, subject, body));
     }
     @AfterTest
     public void tearDown(){

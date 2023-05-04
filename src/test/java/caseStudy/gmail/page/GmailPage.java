@@ -26,7 +26,8 @@ public class GmailPage extends GeneralFunctions {
     private final By rowsSelector = By.cssSelector("tr.zA.zE");
     private final By childEmailSelector = By.xpath(".//td/div/span[1]/span");
     private final By childSubjectSelector = By.xpath(".//td/div/div/div/span/span");
-
+    private final By childBodySelector = By.xpath(".//td/div/div/span");
+    private final String bodyPrefix = " - \n";
 
 
     public GmailPage(WebDriver driver) {
@@ -45,31 +46,31 @@ public class GmailPage extends GeneralFunctions {
     public void verifyLogin() {
 
         boolean login = driver.getCurrentUrl().contains("signin");
-        if(login){
+        if (login) {
             System.out.println("Login is successful");
-        }else{
+        } else {
             System.out.println("Login with provided credentials failed");
         }
 
     }
 
-    public void createEmail(String email, String subject){
+    public void createEmail(String email, String subject, String body) {
 
         driverWait(20);
         clickBtn(composeEmailBtn);
         inputData(recepientInput, email);
         inputData(subjectInput, subject);
-        inputData(bodyInput, generateRandomString());
+        inputData(bodyInput, body);
         clickBtn(sendBtn);
 
     }
 
-    public boolean verifyEmailReceived(String email, String subject) {
+    public boolean verifyEmailReceived(String email, String subject, String body) {
 
-        List <WebElement> rowsList = driver.findElements(rowsSelector);
+        List<WebElement> rowsList = driver.findElements(rowsSelector);
 
-        for(WebElement elem : rowsList) {
-            if (checkSingleRow(elem, email, subject)) {
+        for (WebElement elem : rowsList) {
+            if (checkSingleRow(elem, email, subject, body)) {
                 System.out.println("Email with given sender and subject is found");
                 return true;
             }
@@ -78,7 +79,7 @@ public class GmailPage extends GeneralFunctions {
         return false;
     }
 
-    public boolean checkSingleRow(WebElement row, String email, String subject){
+    public boolean checkSingleRow(WebElement row, String email, String subject, String body) {
         WebElement emailCheck = row.findElement(childEmailSelector);
 
         String nextEmail = emailCheck.getAttribute("email");
@@ -94,6 +95,15 @@ public class GmailPage extends GeneralFunctions {
 
         System.out.println("Looking for email with the subject " + nextSubject);
         if (!nextSubject.equals(subject)) {
+            return false;
+        }
+
+        WebElement bodyCheck = row.findElement(childBodySelector);
+
+        String nextBody = bodyCheck.getText();
+
+        System.out.println("Looking for email with the body " + nextBody);
+        if (!nextBody.equals(bodyPrefix + body)) {
             return false;
         }
 
