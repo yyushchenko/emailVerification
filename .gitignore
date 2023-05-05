@@ -18,7 +18,5 @@ target/
 ### Mac OS ###
 .DS_Store
 
-
 .idea
-src/main/resources/config.properties
 src/main/resources/chromedriver
